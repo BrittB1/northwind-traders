@@ -7,21 +7,35 @@ public class App {
         String username = "root";
         String password = "yearup";
 
-        String query = "SELECT ProductName FROM products";
+        String query = "SELECT ProductID, ProductName, UnitPrice,UnitsInStock FROM products";
 
         try {
-            Connection connection = DriverManager.getConnection(url,username,password);
+            Connection c = DriverManager.getConnection(url,username,password);
             System.out.println("Yay! Connected to Northwind Database");
 
-            Statement s = connection.createStatement();
-            ResultSet r = s.executeQuery(query);
+            // old statement, allows for injection
+           // Statement s = c.createStatement();
+            //ResultSet r = s.executeQuery(query);
+
+            PreparedStatement ps = c.prepareStatement("SELECT ProductID, ProductName,UnitPrice, UnitsInStock FROM Products");
+            ResultSet r = ps.executeQuery();
 
             System.out.println("Northwind Products");
             while (r.next()) {
-
+                int productId = r.getInt("ProductID");
                 String productName = r.getString("ProductName");
-                System.out.println(productName);
+                double unitPrice = r.getDouble("UnitPrice");
+                int unitsInStock = r.getInt("UnitsInStock");
+
+                System.out.println("Product ID: " + productId);
+                System.out.println("Name: " + productName);
+                System.out.println("Price: $" + unitPrice);
+                System.out.println("In Stock: " + unitsInStock);
+                System.out.println("_________________________");
             }
+            r.close();
+            ps.close();
+            c.close();
 
         } catch (SQLException e) {
             System.out.println("Couldn't connect..");
