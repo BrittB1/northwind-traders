@@ -15,26 +15,32 @@ public class NorthwindDAO {
     }
 
     public ResultSet getAllProducts() throws SQLException {
-        String query = "SELECT ProductID, ProductName,UnitPrice, UnitsInStock FROM Products";
+        String query = "SELECT ProductID, ProductName, UnitPrice, UnitsInStock FROM Products";
         PreparedStatement ps = c.prepareStatement(query);
         return ps.executeQuery();
     }
 
     public ResultSet getAllCustomers() throws SQLException {
-        String query = "SELECT ContactName, CompanyName, City, Country, Phone " + "FROM Customers " + "ORDER BY Country";
+        String query = "SELECT ContactName, CompanyName, City, Country, Phone " +
+                "FROM Customers " +
+                "ORDER BY Country";
         PreparedStatement ps = c.prepareStatement(query);
 
         return ps.executeQuery();
     }
     public ResultSet getAllCategories() throws SQLException {
-        String query = "SELECT CategoryID, CategoryName " + "FROM Categories" + "ORDER BY CategoryID";
+        String query = "SELECT CategoryID, CategoryName " +
+                "FROM Categories " +
+                "ORDER BY CategoryID";
         PreparedStatement ps = c.prepareStatement(query);
 
         return ps.executeQuery();
     }
     public ResultSet getProductsByCategory(int categoryId) throws SQLException {
-String query = "SELECT Product ID, ProductName, UnitPrice, UnitsInStock " +
-        "FROM Products" + "WHERE Category ID = ? " + "ORDER BY ProductID";
+String query = "SELECT ProductID, ProductName, UnitPrice, UnitsInStock " +
+        "FROM Products " +
+        "WHERE CategoryID = ? " +
+        "ORDER BY ProductID";
 
 PreparedStatement ps = c.prepareStatement(query);
 ps.setInt(1,categoryId);

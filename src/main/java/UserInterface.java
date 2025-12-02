@@ -10,12 +10,12 @@ public class UserInterface {
 
     private Scanner keyboard;
 
-    public int displayMainMenu(){
+    public int displayMainMenu() {
         displayHeader("Northwind Traders - HOME ");
         System.out.println("1 ) Show All Products");
         System.out.println("2 ) Show All Customers");
-        System.out.println("3 ) Show All Customers");
-        System.out.println(" 0) EXIT");
+        System.out.println("3 ) Show All Categories");
+        System.out.println("0 ) EXIT");
 
         System.out.println(MENU_LINE);
         System.out.println("Choose an option to get started: ");
@@ -24,30 +24,34 @@ public class UserInterface {
         keyboard.nextLine();
         return choice;
     }
-    public void displayProductTableHeader(){
-        System.out.printf("%-5s %-35s %-12s %-10s%n", "ID","Product Name", "Price","Stock");
+
+    public void displayProductTableHeader() {
+        System.out.printf("%-5s %-35s %-12s %-10s%n", "ID", "Product Name", "Price", "Stock");
         System.out.println(MENU_LINE);
     }
-    public void displayProductRow(int id, String name, double price,int stock) {
+
+    public void displayProductRow(int id, String name, double price, int stock) {
         System.out.printf("%-5d %-35s $%-11.2f %-10d%n", id, name, price, stock);
 
     }
 
     public void displayCategoryTableHeader() {
-        System.out.printf("%-5s %-25s%n" , "ID" , "Category Name");
+        System.out.printf("%-5s %-25s%n", "ID", "Category Name");
         System.out.println(MENU_LINE);
     }
+
     public void displayCustomerTableHeader() {
         System.out.printf("%-25s %-30s %-20s %-15s %-15s%n",
                 "Contact Name", "Company Name", "City", "Country", "Phone");
         System.out.println(MENU_LINE);
     }
 
-    public void displayCategoryRow (int id, String name) {
-        System.out.printf("%-5d %-25s%n", id,name);
+    public void displayCategoryRow(int id, String name) {
+        System.out.printf("%-5d %-25s%n", id, name);
 
     }
-    public int userPickedCategoryId () {
+
+    public int userPickedCategoryId() {
         System.out.println("\n Please enter a Category ID: ");
 
         return keyboard.nextInt();
@@ -58,6 +62,7 @@ public class UserInterface {
         keyboard.nextLine();
 
     }
+
     public UserInterface() {
         this.keyboard = new Scanner(System.in);
     }
@@ -92,10 +97,9 @@ public class UserInterface {
     public void close() {
         keyboard.close();
     }
-    public String getMenuLine(){
-        return MENU_LINE;
-    }
 
-    public void displayAllCustomers() {
+    public void displayCustomerRow(String contactName, String companyName, String city, String country, String phone) {
+            System.out.printf("%-25s %-30s %-20s %-15s %-15s%n",
+                    contactName, companyName, city, country, phone);
+        }
     }
-}
