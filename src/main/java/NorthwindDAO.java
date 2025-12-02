@@ -26,6 +26,20 @@ public class NorthwindDAO {
 
         return ps.executeQuery();
     }
+    public ResultSet getAllCategories() throws SQLException {
+        String query = "SELECT CategoryID, CategoryName " + "FROM Categories" + "ORDER BY CategoryID";
+        PreparedStatement ps = c.prepareStatement(query);
+
+        return ps.executeQuery();
+    }
+    public ResultSet getProductsByCategory(int categoryId) throws SQLException {
+String query = "SELECT Product ID, ProductName, UnitPrice, UnitsInStock " +
+        "FROM Products" + "WHERE Category ID = ? " + "ORDER BY ProductID";
+
+PreparedStatement ps = c.prepareStatement(query);
+ps.setInt(1,categoryId);
+return  ps.executeQuery();
+    }
 
     public void disconnect() {
         if (c != null) {

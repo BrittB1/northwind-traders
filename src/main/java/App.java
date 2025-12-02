@@ -24,7 +24,7 @@ public class App {
 
                 switch (choice) {
                     case 1 -> displayAllProducts();
-                    case 2 -> ui.displayErrorMessage("");
+                    case 2 -> ui.displayAllCustomers();
                     case 0 -> ui.displaySuccessMessage("Exiting.. goodbye");
                     default -> ui.displayErrorMessage("Invalid option! Try again..");
 
@@ -48,30 +48,63 @@ public class App {
     }
 
     private void displayAllProducts() {
-        try {
-            ResultSet results = dao.getAllProducts();
+
+        try (ResultSet rs = dao.getAllProducts()) {
 
             ui.displayHeader("All Products");
             ui.displayProductTableHeader();
 
             int count = 0;
 
-            while (results.next()) {
-                int id = results.getInt("ProductID");
-                String name = results.getString("ProductName");
-                double price = results.getDouble("UnitPrice");
-                int stock = results.getInt("UnitsInStock");
+            while (rs.next()) {
+                int id = rs.getInt("ProductID");
+                String name = rs.getString("ProductName");
+                double price = rs.getDouble("UnitPrice");
+                int stock = rs.getInt("UnitsInStock");
 
                 ui.displayProductRow(id, name, price, stock);
                 count++;
             }
             ui.displayFooter(count + " products displayed");
-            results.close();
 
         } catch (SQLException e) {
-            System.out.println("ERROR! Couldn't display products..");
+            ui.displayErrorMessage("ERROR! Couldn't display products..");
             e.printStackTrace();
         }
+    }
+
+    private void displayAllCustomers() {
+
+        try (ResultSet rs = dao.getAllCustomers()) {
+            ui.displayHeader("All Customers by Country");
+            ui.displayCustomerTableHeader();
+
+
+            String currentCountry = "";
+            int count = 0;
+
+            while (rs.next()) {
+                String contactName = rs.getString("ContactName");
+                String companyName = rs.getString("CompanyName");
+                String city = rs.getString("City");
+                String country = rs.getString("Country");
+                String phone = rs.getString("Phone");
+
+                if (!country.equals(currentCountry)) {
+                    if (!currentCountry.isEmpty())
+                        System.out.println();
+                }
+                currentCountry = country;
+            }
+            System.out.printf("\"%-25s %-30s %-20s %-15s %-15s%n",
+                    "Contact Name", "Company Name", "City", "Country", "Phone" );
+            count++;
+        }
+        ui.displayFooter(count + " customers displayed");
+
+    } catch (SQLException e) {
+        ui.displayErrorMessage("ERROR! Couldn't display products..");
+        e.printStackTrace();
     }
 
     // program entry point 'front door'

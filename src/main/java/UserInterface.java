@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class UserInterface {
 
     // constants denoted with ALL_CAPS_AND_UNDERSCORES. Tells other programmers 'don't change this!'
-    private static final int MENU_WIDTH = 45;
+    private static final int MENU_WIDTH = 50;
     private static final String MENU_BORDER = "=".repeat(MENU_WIDTH);
     private static final String MENU_LINE = "=".repeat(MENU_WIDTH);
 
@@ -14,6 +14,7 @@ public class UserInterface {
         displayHeader("Northwind Traders - HOME ");
         System.out.println("1 ) Show All Products");
         System.out.println("2 ) Show All Customers");
+        System.out.println("3 ) Show All Customers");
         System.out.println(" 0) EXIT");
 
         System.out.println(MENU_LINE);
@@ -21,7 +22,7 @@ public class UserInterface {
 
         int choice = keyboard.nextInt();
         keyboard.nextLine();
-                return choice;
+        return choice;
     }
     public void displayProductTableHeader(){
         System.out.printf("%-5s %-35s %-12s %-10s%n", "ID","Product Name", "Price","Stock");
@@ -31,6 +32,27 @@ public class UserInterface {
         System.out.printf("%-5d %-35s $%-11.2f %-10d%n", id, name, price, stock);
 
     }
+
+    public void displayCategoryTableHeader() {
+        System.out.printf("%-5s %-25s%n" , "ID" , "Category Name");
+        System.out.println(MENU_LINE);
+    }
+    public void displayCustomerTableHeader() {
+        System.out.printf("%-25s %-30s %-20s %-15s %-15s%n",
+                "Contact Name", "Company Name", "City", "Country", "Phone");
+        System.out.println(MENU_LINE);
+    }
+
+    public void displayCategoryRow (int id, String name) {
+        System.out.printf("%-5d %-25s%n", id,name);
+
+    }
+    public int userPickedCategoryId () {
+        System.out.println("\n Please enter a Category ID: ");
+
+        return keyboard.nextInt();
+    }
+
     public void enterToContinue() {
         System.out.println("\nPress ENTER to continue..");
         keyboard.nextLine();
@@ -69,5 +91,11 @@ public class UserInterface {
 
     public void close() {
         keyboard.close();
+    }
+    public String getMenuLine(){
+        return MENU_LINE;
+    }
+
+    public void displayAllCustomers() {
     }
 }
